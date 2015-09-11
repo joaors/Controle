@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      lang="pt-BR">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>        
+        <h:outputStylesheet library="css" name="default.css"/>
+        <title><ui:insert name="title">Controle</ui:insert></title>
+    </h:head>
+    
+    <h:body>
+            <!-- Fixed navbar -->
+            <nav class="avbar navbar-inverse navbar-fixed-top" role="navigation">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>                  
+                  <a class="navbar-brand glyphicon glyphicon-tasks" href="/Controle/"/>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav">                    
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros<b class="caret"></b></a>
+                      <ul class="dropdown-menu" role="menu">
+                          <li><a href="/Controle/restricted/cliente/cliente.jsf">Cliente</a></li>
+                          <li><a href="/Controle/restricted/fornecedor/fornecedor.jsf">Fornecedor</a></li>
+                          <li><a href="/Controle/restricted/filial/filial.jsf">Filial</a></li>
+                          <li><a href="/Controle/restricted/servico/servico.jsf">Serviços</a></li>
+                          <li><a href="/Controle/restricted/produto/produto.jsf">Produto</a></li>
+                      </ul>                      
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ordem Servico<span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="/Controle/restricted/ordemServico/list.jsf">Consulta</a></li>
+                        <li><a href="/Controle/restricted/incluirOs/incluir.jsf">Incluir OS</a></li>
+                      </ul>                      
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Conta Pagar<span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="/Controle/restricted/contaPagar/contaPagar.jsf">Conta Pagar</a></li>                        
+                      </ul>                      
+                    </li>                      
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">                      
+                      <h:form>                          
+                        <h:commandLink action="#{loginController.doLogout}" value="Sair" style="font-size: 10px"/>
+                      </h:form>
+                  </ul>                    
+                </div><!--/.nav-collapse -->
+              </div>
+            </nav>
+        <br/>
+        <div class="container-fluid">
+                       
+            <div class="row">
+                <br/>
+                <br/>
+                <ol class="breadcrumb">
+                    <li><a href="/Controle/restricted/principal.jsf">Home</a></li>
+                    <li class="active"><ui:insert name="caminho"></ui:insert></li>
+                </ol>
+
+                <div class="col-md-12">
+                    <p:messages autoUpdate="true" id="mensagem"/>                    
+                    <ui:insert name="body"/>                    
+                </div>
+            </div>
+        </div>   
+
+    <!-- Scripts - Atente-se na ordem das chamadas -->    
+    <h:outputScript name="js/bootstrap.min.js" />
+    <h:outputScript name="js/default.js" />
+    <h:outputScript name="js/Locale.js" />
+    
+    </h:body>
+
+</html>

@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    
+    <p:focus for="descricao"/>
+    <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-1, ui-grid-col-4" layout="grid">
+        <h:outputLabel value="#{bundle.descricao}:"/>
+        <p:inputText id="descricao" value="#{fornecedorController.selected.descricao}" required="true" styleClass="form-control"/>
+
+        <h:outputLabel value="#{bundle.nomeFantasia}:"/>
+        <p:inputText id="nomeFantasia" value="#{fornecedorController.selected.nomeFantasia}" styleClass="form-control"/>
+
+        <h:outputLabel value="#{bundle.inscEstadual}:"/>
+        <p:inputText id="inscEstadual" value="#{fornecedorController.selected.inscEstadual}" styleClass="form-control"/>
+
+        <h:outputLabel value="#{bundle.cnpj}:"/>
+        <p:inputMask id="cnpj" value="#{fornecedorController.selected.cnpj}" mask="99.999.999/9999-99" validatorMessage="#{msg.cnpjInvalido}" styleClass="form-control">
+            <f:validateRegex pattern="(^[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}/{1}[0-9]{4}-{1}[0-9]{2})?" />
+        </p:inputMask>
+        
+    </p:panelGrid>
+    <div class="btns">
+        <p:commandButton action="#{fornecedorController.salvar}" styleClass="btn btn-primary" value="#{bundle.Salvar}" process="pnDados @this" update="@form"/>
+        <p:commandButton actionListener="#{fornecedorController.voltar}" styleClass="btn btn-link" value="#{bundle.voltar}" update="@form" process="@this"/>        
+    </div>
+    
+</ui:composition>

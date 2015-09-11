@@ -1,0 +1,61 @@
+<ui:composition template="/template.xhtml"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:dlg="http://xmlns.jcp.org/jsf/composite/component"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        <h:outputText value="Conta Pagar"/>
+    </ui:define>
+    <ui:define name="caminho"><h:outputText value="Cadastro - Conta Pagar"/></ui:define>   
+
+    <ui:define name="body">
+        <h:form id="form" lang="pt-BR">
+            <h:panelGroup rendered="#{empty contaPagarController.selected}"><ui:include src="list.xhtml"/></h:panelGroup>
+            <h:panelGroup rendered="#{!empty contaPagarController.selected}"><ui:include src="form.xhtml"/></h:panelGroup>
+        </h:form>
+        
+        <h:form id="formFornecedor">
+            <dlg:autoListSimple onRowSelect="#{contaPagarController.onRowSelectFornecedor}" list="#{contaPagarController.fornecedores}" 
+                                id="fornecedor" idDialog="dlgFornecedor" update=":form:fornecedor:valor " 
+                                onComplete="$('.ui-autocomplete-input').addClass('form-control'); $('#form\\:fornecedor\\:valor_input').focus()" titulo="#{bundle.fornecedor}"/>
+        </h:form>
+        <h:form id="formFilial">
+            <dlg:autoListSimple onRowSelect="#{contaPagarController.onRowSelectFilial}" list="#{contaPagarController.filiais}" 
+                                id="filial" idDialog="dlgFilial" update=":form:filial:valor" 
+                                onComplete="$('.ui-autocomplete-input').addClass('form-control'); $('#form\\:filial\\:valor_input').focus()" titulo="#{bundle.filial}"/>
+        </h:form>        
+        
+        <p:dialog id="dlgFormItem" widgetVar="dlgFormItem" header="Nova Parcela">
+            <h:form id="formItem">
+                <p:focus for="vencimento"/>
+                <p:panelGrid columns="2" id="panel" columnClasses="rotulo, fieldsForm">
+                    
+                    <p:outputLabel value="#{bundle.vencimento}:" for="vencimento"/>
+                    <p:inputText id="vencimento" value="#{contaPagarController.itemSelecionado.dataVencimento}" required="true"  label="data" pt:data-required="true" pt:type="date" style="height: 30px">
+			<f:convertDateTime pattern="#{bundle.patternDataHtml5}"/>
+                    </p:inputText>                    
+                    
+                    <p:outputLabel value="Valor Inicial:" for="valorInicial"/>
+                    <p:inputText id="valorInicial" value="#{contaPagarController.itemSelecionado.valorInicial}" required="true" pt:data-required="true" pt:type="number"/>                    
+
+                    <p:outputLabel value="Valor Desconto:" for="valorDesconto"/>
+                    <p:inputText id="valorDesconto" value="#{contaPagarController.itemSelecionado.desconto}" required="true">
+                        <f:convertNumber pattern="#{bundle.pattern4DigitsWithThousandSeparator}"/>                        
+                    </p:inputText>
+                </p:panelGrid>
+                <div class="btns">
+                    <h:commandButton actionListener="#{contaPagarController.salvarParcela}" value="#{bundle.Salvar}" styleClass="btn btn-primary">
+                        <p:ajax update=":form:itens :form:delete :form:pagar :form:valorTotal @form" process="@form"/>
+                    </h:commandButton>
+                </div>
+            </h:form>
+        </p:dialog>
+       
+        <h:outputScript name="js/Locale.js" />
+    </ui:define>    
+</ui:composition>

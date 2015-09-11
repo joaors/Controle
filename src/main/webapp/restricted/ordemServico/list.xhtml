@@ -1,0 +1,128 @@
+<ui:composition template="/template.xhtml"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:dlg="http://xmlns.jcp.org/jsf/composite/component"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title"><h:outputText value="#{bundle.consultaOrdemServico}"></h:outputText></ui:define>  
+    <ui:define name="caminho"><h:outputText value="OrdemServiço - Consulta"></h:outputText></ui:define>
+    <ui:define name="body">
+        <h:form id="form">
+            <div>
+                <p:panelGrid columns="2" columnClasses="ui-grid-col-1, ui-grid-col-4" layout="grid">
+                    <p:outputLabel value="#{bundle.cliente}:"/>
+                    <dlg:autoComplete id="completeCliente" controller="#{consultaOrdemServicoController.clientes}" value="#{consultaOrdemServicoController.cliente}" 
+                        dialogId="dlgCliente" update=":form:completeCliente:valor" require="false"
+                        header="Clientes" onRowSelect="#{consultaOrdemServicoController.onRowSelectCliente}"/>
+
+                    <p:outputLabel value="#{bundle.filial}:"/>
+                    <dlg:autoComplete id="completeFilial" controller="#{consultaOrdemServicoController.filiais}" value="#{consultaOrdemServicoController.filial}" 
+                        dialogId="dlgFilial" update=":form:completeFilial:valor" require="false"
+                        header="Clientes" onRowSelect="#{consultaOrdemServicoController.onRowSelectFilial}"/>                    
+                </p:panelGrid>
+                <p:panelGrid columns="4" id="pnData" columnClasses="ui-grid-col-1, ui-grid-col-2, ui-grid-col-1, ui-grid-col-1" layout="grid">
+                    <p:outputLabel value="#{bundle.entrada}:"/>
+                    <p:calendar mask="true" locale="pt" value="#{consultaOrdemServicoController.dataInicio}" id="dataIni" pattern="#{bundle.patternData}" label="Entrada"/>
+                    <p:outputLabel value="#{bundle.saida}:"/>
+                    <p:calendar mask="true" locale="pt" value="#{consultaOrdemServicoController.dataFim}" id="dataFim" pattern="#{bundle.patternData}" label="Saída"/>
+                </p:panelGrid>                     
+                <p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-2" layout="grid">
+                    <p:outputLabel value="Pago?:"/>
+                    <p:selectOneRadio id="options" value="#{consultaOrdemServicoController.pago}">
+                        <f:selectItems value="#{consultaOrdemServicoController.listOpcoes}"/> 
+                    </p:selectOneRadio>
+                </p:panelGrid>
+                <div class="btns">
+                    <p:commandButton action="#{consultaOrdemServicoController.consultar}" styleClass="btn btn-success" value="Consultar" process="@form" update="@form"/>
+                </div>
+            </div>
+            <p:dataTable id="tabela" styleClass="tabela" value="#{consultaOrdemServicoController}" var="item" lazy="true" rowKey="#{item.id}" 
+                         paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" paginatorPosition="bottom" reflow="true">
+                <p:column styleClass="colValor">
+                    <f:facet name="header">
+                        <h:outputText value="O.S"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numero}"/>
+                </p:column>
+                <p:column styleClass="colString">
+                    <f:facet name="header">
+                        <h:outputText value="Lote"/>
+                    </f:facet>
+                    <h:outputText value="#{item.lote}"/>
+                </p:column>
+                <p:column styleClass="colString">
+                    <f:facet name="header">
+                        <h:outputText value="Filial"/>
+                    </f:facet>
+                    <h:outputText value="#{item.filial.descricao}"/>
+                </p:column>
+                <p:column styleClass="colString">
+                    <f:facet name="header">
+                        <h:outputText value="Cliente"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cliente.descricao}"/>
+                </p:column>
+                <p:column styleClass="colData">
+                    <f:facet name="header">
+                        <h:outputText value="Entrada"/>
+                    </f:facet>
+                    <h:outputText value="#{item.inicio}">                        				
+                        <f:convertDateTime pattern="#{bundle.patternData}" />
+                    </h:outputText>  
+                </p:column>            
+                <p:column styleClass="colData">
+                    <f:facet name="header">
+                        <h:outputText value="Fim"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fim}">
+                        <f:convertDateTime pattern="#{bundle.patternData}"/>
+                    </h:outputText>
+                </p:column>            
+                <p:column styleClass="colString">
+                    <f:facet name="header">
+                        <h:outputText value="Serviço"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empresaServico.servico.descricao}"/>
+                </p:column>             
+                <p:column styleClass="colValor textRight" priority="3">
+                    <f:facet name="header">
+                        <h:outputText value="Quantidade"/>
+                    </f:facet>
+                    <h:outputText value="#{item.quantidade}"/>
+                </p:column>
+                <p:column styleClass="colValor textRight" priority="2">
+                    <f:facet name="header">
+                        <h:outputText value="Valor Unit."/>
+                    </f:facet>
+                    <h:outputText value="#{item.valorUnitario}"/>
+                </p:column>
+                <p:column styleClass="colValor textRight">
+                    <f:facet name="header">
+                        <h:outputText value="Valor Total"/>
+                    </f:facet>
+                    <h:outputText value="#{item.valortotal}"/>
+                </p:column>
+                <p:column styleClass="colBoolean">
+                    <f:facet name="header">
+                        <h:outputText value="Pago?"/>
+                    </f:facet>
+                    <h:outputText styleClass="#{item.classSituacao}" value="#{item.stringPago}"/>
+                </p:column>            
+                <p:column styleClass="columnSingleButton">
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash" actionListener="#{consultaOrdemServicoController.delete(item)}" update="tabela" rendered="#{consultaOrdemServicoController.getRenderExcluirOp(item) and loginController.isAdmin}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:form id="formCliente">
+            <dlg:autoListSimple onRowSelect="#{consultaOrdemServicoController.onRowSelectCliente}" list="#{consultaOrdemServicoController.clientes}" 
+                                id="cliente" idDialog="dlgCliente" update=":form:completeCliente:valor" titulo="#{bundle.cliente}"/>
+        </h:form>
+        <h:form id="formFilial">
+            <dlg:autoListSimple onRowSelect="#{consultaOrdemServicoController.onRowSelectFilial}" list="#{consultaOrdemServicoController.filiais}" 
+                                id="filial" idDialog="dlgFilial" update=":form:completeFilial:valor" titulo="#{bundle.filial}"/>
+        </h:form>
+        <h:outputScript name="js/Locale.js"/>        
+    </ui:define>
+</ui:composition>

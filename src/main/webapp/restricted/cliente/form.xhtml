@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:tabView id="tabView" widgetVar="tabView">
+        <p:tab title="Dados Pessoais">
+            <p:focus for="descricao"/>            
+            <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-1, ui-grid-col-4" layout="grid">
+                
+                <p:outputLabel value="#{bundle.descricao}:" for="descricao"/>
+                <p:inputText id="descricao" type="text" class="form-control" value="#{clienteController.selected.descricao}" required="true" requiredMessage="Valor Obrigatório" styleClass="form-control"/>
+
+                <h:outputLabel value="#{bundle.nomeFantasia}:"/>                
+                <p:inputText id="nomeFantasia" type="text" class="form-control" value="#{clienteController.selected.nomeFantasia}" styleClass="form-control"/>
+
+                <h:outputLabel value="#{bundle.inscEstadual}:"/>
+                <p:inputText id="inscEstadual" type="text" class="form-control" value="#{clienteController.selected.inscEstadual}" styleClass="form-control"/>
+
+                <h:outputLabel value="#{bundle.cnpj}:"/>
+                <p:inputMask id="cnpj" class="form-control" value="#{clienteController.selected.cnpj}" mask="99.999.999/9999-99" validatorMessage="#{msg.cnpjInvalido}" styleClass="form-control">
+                    <f:validateRegex pattern="(^[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}/{1}[0-9]{4}-{1}[0-9]{2})?" />
+                </p:inputMask>
+
+                <h:outputLabel value="#{bundle.saldo}:"/>
+                <p:inputText id="saldo" type="text" class="form-control" value="#{clienteController.selected.saldo}" styleClass="form-control">
+                    <f:convertNumber currencySymbol="R$" pattern="#{bundle.pattern4DigitsWithThousandSeparator}"/>
+                </p:inputText>       
+            </p:panelGrid>
+        </p:tab>
+        <p:tab title="Endereço">
+            <p:focus for="endereco"/>
+            <p:panelGrid id="pnEndereco" columns="2">
+                <h:outputLabel value="#{bundle.rua}:"/>
+                <p:inputText id="endereco" type="text" class="form-control" value="#{clienteController.selected.endereco}" size="50"/>
+
+                <h:outputLabel value="#{bundle.cidade}:"/>
+                <p:inputText id="cidade" type="text" class="form-control" value="#{clienteController.selected.cidade}" size="50"/>
+
+                <h:outputLabel value="#{bundle.bairro}:"/>
+                <p:inputText id="bairro" type="text" class="form-control" value="#{clienteController.selected.dsbairro}" size="50"/>
+
+                <h:outputLabel value="#{bundle.cep}:"/>
+                <p:inputText id="cep" type="text" class="form-control" value="#{clienteController.selected.cep}" size="50"/>                
+            </p:panelGrid>            
+        </p:tab>
+        <p:tab title="Serviços">            
+            <p:dataTable id="tabelaServico" value="#{clienteController.empresaServicoController}" var="v" lazy="true" paginatorPosition="bottom" paginator="true" rowKey="#{servico.id}" rows="10" rowsPerPageTemplate="10,20,30,40,50">
+                <f:facet name="header">
+                    <p:commandButton id="addServicos" icon="ui-icon-plus" value="#{bundle.servicos}" process="@form" update="@form" onclick="PF('dlgServico').show();"/>
+                </f:facet>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.descricao}"/>                        
+                    </f:facet>
+                    <h:outputText value="#{v.servico.descricao}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.valor}"/>
+                    </f:facet>
+                    <h:inputText value="#{v.valorUnitario}" required="true" label="#{bundle.valor}">
+                        <f:convertNumber pattern="#{bundle.pattern4DigitsWithThousandSeparator}"/>
+                        <p:ajax update="@this" listener="#{clienteController.empresaServicoController.onValorChange}"/>
+                    </h:inputText>                    
+                </p:column>
+                <p:column styleClass="colunaBotao">
+                    <p:commandButton icon="ui-icon-trash" value="#{bundle.excluir}" actionListener="#{clienteController.empresaServicoController.delete(v)}" update="tabelaServico"/>
+                </p:column>
+            </p:dataTable>
+                 
+        </p:tab>        
+    </p:tabView>
+
+    <div class="btns">
+        <p:commandButton actionListener="#{clienteController.salvar}" id="salvar" styleClass="btn-primary" value="#{bundle.Salvar}" process="@form" update="@form"/>
+        <p:commandButton actionListener="#{clienteController.voltar}" class="btn btn-link" value="#{bundle.voltar}" update="@form" process="@this"/>        
+    </div>
+    
+</ui:composition>

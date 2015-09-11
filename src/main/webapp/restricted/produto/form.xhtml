@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:focus for="descricao"/>
+    <p:panelGrid id="pnDados" columns="2" styleClass="rotulo, fieldsForm">
+        <h:outputLabel value="#{bundle.descricao}"/>
+        <p:inputText id="descricao" value="#{produtoController.selected.descricao}" required="true" size="50"/>
+        
+        <h:outputLabel value="#{bundle.valor}"/>
+        <p:inputText id="nomeFantasia" value="#{produtoController.selected.valor}" size="50">
+            <f:convertNumber pattern="#,##0.00" />
+        </p:inputText>
+        
+        <h:outputLabel value="#{bundle.ativo}"/>
+        <p:selectBooleanCheckbox value="#{produtoController.selected.ativo}" id="ativo"/>         
+    </p:panelGrid>
+    <div class="btns">
+        <p:commandButton action="#{produtoController.salvar}" styleClass="btn btn-primary" value="#{bundle.Salvar}" process="pnDados @this" update="@form"/>
+        <p:commandButton actionListener="#{produtoController.voltar}" styleClass="btn btn-link" value="#{bundle.voltar}" update="@form" process="@this"/>        
+    </div>
+</ui:composition>

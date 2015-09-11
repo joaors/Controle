@@ -1,0 +1,89 @@
+<ui:composition template="/template.xhtml"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"      
+      xmlns:dlg="http://xmlns.jcp.org/jsf/composite/component"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        <h:outputText value="#{bundle.incluirOS}"></h:outputText>
+    </ui:define>
+    <ui:define name="caminho"><h:outputText value="OrdemServiço - Incluir"></h:outputText></ui:define>
+
+    <ui:define name="body">
+        <h:form id="form" styleClass="form-group">
+            <p:focus/>
+                            
+            <p:panelGrid columns="2" columnClasses="ui-grid-col-1, ui-grid-col-4" layout="grid">                
+                <h:outputLabel value="OP:"/>
+                <p:inputText id="op" value="#{incluirOsController.os.numero}" required="true" styleClass="form-control"/>
+
+                <h:outputLabel value="Entrada:"/>
+                <p:inputText id="dataIni" value="#{incluirOsController.os.inicio}" required="true"  label="Entrada" pt:data-required="true" pt:type="date" style="height: 35px;">
+                    <f:convertDateTime pattern="#{bundle.patternDataHtml5}"/>
+                </p:inputText>                 
+                
+                <h:outputLabel value="Saída"/>
+                <p:inputText id="dataFim" value="#{incluirOsController.os.fim}" required="true"  label="Saída" pt:data-required="true" pt:type="date" style="height: 35px;">
+                    <f:convertDateTime pattern="#{bundle.patternDataHtml5}"/>
+                </p:inputText> 
+                
+                <h:outputLabel value="#{bundle.filiais}"/>
+                <dlg:autoComplete id="filial" controller="#{incluirOsController.filiais}" value="#{incluirOsController.os.filial}" 
+                                  dialogId="dlgFilial" update=":form:filial:valor"
+                                  require="true" disabled="fasle" header="Filiais" onRowSelect="#{incluirOsController.onRowSelectFilial}"/>
+
+                <h:outputLabel value="#{bundle.cliente}"/>
+                <dlg:autoComplete id="cliente" controller="#{incluirOsController.clientes}" value="#{incluirOsController.os.cliente}" 
+                                  dialogId="dlgCliente" update=":form:cliente:valor :formServico:servico:dados :form:servico:valor :form:valorTotal :form:valorUnitario"
+                                  require="true" disabled="fasle" header="Clientes" onRowSelect="#{incluirOsController.onRowSelectCliente}"/>
+                
+                
+                <h:outputLabel value="#{bundle.servico}"/>
+                <dlg:autoComplete id="servico" controller="#{incluirOsController.empresaServicos}" value="#{incluirOsController.os.empresaServico}" 
+                                  dialogId="dlgServico" update=":form:servico:valor :formServico:servico:dados :form:valorTotal :form:valorUnitario"
+                                  require="true" disabled="false" header="Servico" onRowSelect="#{incluirOsController.onRowSelectServico}"/>                
+  
+                <h:outputLabel value="#{bundle.valor}"/>
+                <p:inputText id="valorUnitario" value="#{incluirOsController.os.valorUnitario}" styleClass="form-control">
+                    <f:convertNumber pattern="#,##0.00" />
+                    <p:ajax update=":form:valorTotal"/>
+                </p:inputText>
+                
+                <h:outputLabel value="Quant"/>
+                <p:inputText id="quantidade" value="#{incluirOsController.os.quantidade}" styleClass="form-control">
+                    <p:ajax event="blur" update=":form:valorTotal"/>
+                </p:inputText>
+
+                <h:outputLabel value="Total"/>
+                <p:inputText id="valorTotal" value="#{incluirOsController.os.valortotal}" disabled="true" styleClass="form-control">
+                    <f:convertNumber pattern="#,##0.00" />
+                    <p:ajax event="blur" update=":form:valorTotal"/>
+                </p:inputText>
+            </p:panelGrid>
+            <div class="btns">
+                <p:commandButton id="salvar" action="#{incluirOsController.salvar}" styleClass="btn btn-primary" value="#{bundle.Salvar}" process="@form" update="@form"/>
+            </div>
+        </h:form>
+        <h:form id="formCliente">
+            <dlg:autoListSimple onRowSelect="#{incluirOsController.onRowSelectCliente}" list="#{incluirOsController.clientes}" 
+                                id="cliente" idDialog="dlgCliente" update=":form:cliente:valor :formServico:servico:dados :form:servico:valor :form:valorTotal :form:valorUnitario" 
+                                onComplete="$('#form\\:cliente\\:valor_input').focus()" titulo="#{bundle.cliente}"/>
+        </h:form>
+        <h:form id="formFilial">
+            <dlg:autoListSimple onRowSelect="#{incluirOsController.onRowSelectFilial}" list="#{incluirOsController.filiais}" 
+                                id="filial" idDialog="dlgFilial" update=":form:filial:valor" 
+                                onComplete="$('#form\\:filial\\:valor_input').focus()" titulo="#{bundle.filial}"/>
+        </h:form>        
+        <h:form id="formServico">
+            <dlg:autoListSimple onRowSelect="#{incluirOsController.onRowSelectServico}" list="#{incluirOsController.empresaServicos}" 
+                                id="servico" idDialog="dlgServico" update=":form:servico:valor :formServico:servico:dados :form:valorTotal :form:valorUnitario" 
+                                onComplete="$('#form\\:servico\\:valor_input').focus()" titulo="#{bundle.servico}"/>
+        </h:form>
+        
+        <h:outputScript name="js/Locale.js"/>
+    </ui:define>
+</ui:composition>

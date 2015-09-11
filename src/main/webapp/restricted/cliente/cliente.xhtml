@@ -1,0 +1,24 @@
+<ui:composition template="/template.xhtml"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:dlg="http://xmlns.jcp.org/jsf/composite/component"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title"> 
+        <h:outputText value="#{bundle.clientes}"/>
+    </ui:define>
+    <ui:define name="caminho"><h:outputText value="Cadastro - Cliente"></h:outputText></ui:define>       
+    
+    <ui:define name="body">
+        <h:form id="form">
+            <p:defaultCommand target="form:salvar"/>
+            <h:panelGroup rendered="#{empty clienteController.selected}"><ui:include src="list.xhtml"/></h:panelGroup>
+            <h:panelGroup rendered="#{!empty clienteController.selected}"><ui:include src="form.xhtml"/></h:panelGroup>
+        </h:form>
+        <h:form id="formServicos">
+            <dlg:autoListSimple onRowSelect="#{clienteController.onRowSelect}" list="#{clienteController.servicoController}" 
+                                idDialog="dlgServico" update=":form" titulo="#{bundle.servico}"/>
+        </h:form>        
+    </ui:define>
+</ui:composition>

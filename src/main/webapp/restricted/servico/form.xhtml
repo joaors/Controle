@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:focus for="descricao"/>
+    <p:panelGrid id="pnDados" columns="2" styleClass="rotulo, fieldsForm">
+        <h:outputLabel value="#{bundle.descricao}" for="descricao"/>
+        <p:inputText id="descricao" value="#{servicoController.selected.descricao}" required="true" size="50"/>
+              
+        <h:outputLabel value="#{bundle.valor}" for="valor"/>
+        <p:inputText id="valor" value="#{servicoController.selected.valor}">
+            <f:convertNumber currencySymbol="R$" pattern="#{bundle.pattern4DigitsWithThousandSeparator}"/>
+        </p:inputText>
+        
+    </p:panelGrid>
+    <div class="btns">
+        <p:commandButton action="#{servicoController.salvar}" styleClass="btn btn-primary" value="#{bundle.Salvar}" process="pnDados @this" update="@form"/>
+        <p:commandButton actionListener="#{servicoController.voltar}" styleClass="btn btn-link" value="#{bundle.voltar}" update="@form" process="@this"/>        
+    </div>
+</ui:composition>

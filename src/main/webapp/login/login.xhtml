@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"       
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      lang="pt"
+      xmlns:p="http://primefaces.org/ui"> 
+    <h:head>        
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Login</title>        
+        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>        
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>        
+        <h:outputStylesheet library="css" name="signin.css"/>        
+          
+    </h:head> 
+    <h:body styleClass="body">
+        <h:form styleClass="form-signin" role="form">
+            <p:focus/>
+            <h2 class="form-signin-heading">Efetuar login</h2>
+            <div class="input-group">
+                <input type="text" jsf:id="login" name="login"
+                    placeholder="Login" value="#{loginController.login}" 
+                    required="required" title="Enter your login."
+                    size="35" class="form-control username-input"/>
+
+                <input type="password" jsf:id="password" name="password"
+                    placeholder="Senha" value="#{loginController.senha}" 
+                    required="required" title="Enter your password."
+                    size="35" class="form-control password-input"/>
+            </div>
+
+            <h:commandButton value="Entrar" id="entrar" action="#{loginController.doLogin}" styleClass="btn btn-lg btn-primary btn-block"/>        
+        </h:form>                
+    </h:body> 
+</html>
+
+

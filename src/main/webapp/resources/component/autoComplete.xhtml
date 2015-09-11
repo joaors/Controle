@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+
+    <!-- INTERFACE -->
+    <composite:interface>
+        <composite:attribute name="header" type="java.lang.String" required="true"/>
+        <composite:attribute name="value" required="true" />        
+        <composite:attribute name="dialogId" />
+	<composite:attribute name="controller" required="true" type="com.controle.model.LazyDataModelBase"/>
+        <composite:attribute name="disabled" type="java.lang.Boolean" default="false"/>
+        <composite:attribute name="require" type="java.lang.Boolean" default="true"/>
+        <composite:attribute name="onRowSelect" required="true" method-signature="void action(org.primefaces.event.SelectEvent)"/>
+        <composite:attribute name="update" required="true"/>
+    </composite:interface>
+    <!-- IMPLEMENTATION -->
+    <composite:implementation>
+        <p:autoComplete id="valor" value="#{cc.attrs.value}" var="obj" maxlength="50" label="#{cc.attrs.header}" inputStyleClass="input-AutoComplete"
+                        completeMethod="#{cc.attrs.controller.getCompleteQuery}" disabled="#{cc.attrs.disabled}" 
+			itemLabel="#{obj}" itemValue="#{obj}" 
+			converter="baseEntityConverter"
+                        style="width: 95%"
+                        required="#{cc.attrs.require}" requiredMessage="#{bundle.valorObrigatorio}">
+                    <p:ajax event="itemSelect"  listener="#{cc.attrs.onRowSelect}" update="#{cc.attrs.update}"/>
+		</p:autoComplete>    
+        <p:commandButton icon="ui-icon-search" onclick="PF('#{cc.attrs.dialogId}').show();" type="button" rendered="#{cc.attrs.dialogId != null}" style="height: 30px"/>   
+    </composite:implementation>
+</html>

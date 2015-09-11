@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+
+<!-- INTERFACE -->
+<composite:interface>
+	<composite:attribute name="list" type="com.controle.model.LazyDataModelBase" required="true" />
+        <composite:attribute name="onRowSelect" required="true" method-signature="void action(org.primefaces.event.SelectEvent)"/>
+        <composite:attribute name="idDialog" required="true"/>
+        <composite:attribute name="update" default="@form"/>
+        <composite:attribute name="titulo" required="true"/>
+        <composite:attribute name="onComplete" default=""/>
+</composite:interface>
+
+<!-- IMPLEMENTATION -->
+<composite:implementation>
+	
+    <p:dialog widgetVar="#{cc.attrs.idDialog}" dynamic="true" width="800" header="#{cc.attrs.titulo}">
+        <h:panelGroup id="dados">            
+            <p:inputText value="teste" id="inputTeste"/> 
+            <p:commandButton value="Pesquisar"/>            
+            <br/>
+            <p:dataTable id="table" value="#{cc.attrs.list}" var="item" lazy="true" rowKey="#{item.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" 
+                         paginatorPosition="bottom" selectionMode="single" >
+                
+                <p:ajax event="rowSelect"  listener="#{cc.attrs.onRowSelect}" update="#{cc.attrs.update}" oncomplete="#{cc.attrs.onComplete}"/>
+                
+                <p:column headerText="#{msg.descricao}">
+                    #{item}
+		</p:column>
+            </p:dataTable>
+       	</h:panelGroup>        
+    </p:dialog>	
+</composite:implementation>
+</html>

@@ -1,0 +1,46 @@
+<ui:composition template="/template.xhtml"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"      
+      xmlns:f="http://xmlns.jcp.org/jsf/core"      
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="title">
+        <h:outputText value="Emissão O.S"></h:outputText>
+    </ui:define>
+    <ui:define name="caminho"><h:outputText value="Ordem Serviço - Emissão"></h:outputText></ui:define>
+
+    <ui:define name="body">
+        <h:form id="form">           
+            <p:focus for="inicio"/>
+            <div class="ui-grid ui-grid-responsive">
+                <div class="ui-grid-row">		
+                    <div class="ui-grid-col-1">
+                        <h:outputLabel value="Início" for="inicio"/>
+                    </div>
+                    <div class="ui-grid-col-4">                        
+                    <input type="text" jsf:id="inicio" name="inicio"
+                           placeholder="O.S Início" value="#{relatorioOs.inicio}" 
+                        required="required" title="O.S Início"
+                        size="20" class="form-control"/>                        
+                    </div>			
+                </div>
+                <div class="ui-grid-row" style="margin-top: 5px;">
+                    <div class="ui-grid-col-1">
+                        <h:outputLabel value="Fim" for="fim"/>
+                    </div>
+                    <div class="ui-grid-col-4">
+                        <input type="text" jsf:id="fim" name="fim"
+                               placeholder="O.S Fim" value="#{relatorioOs.fim}" 
+                               required="required" title="O.S Fim"
+                               size="20" class="form-control"/> 
+                    </div>
+                </div>			
+            </div>
+            <div class="btns">
+                <h:commandButton value="Emitir" styleClass="btn btn-primary" actionListener="#{relatorioOs.gerarRelatorio}" onclick="this.form.target='_blank'"/>
+            </div>        
+        </h:form>
+    </ui:define>
+</ui:composition>

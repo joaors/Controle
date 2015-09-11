@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:dlg="http://xmlns.jcp.org/jsf/composite/component"      
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <div class="ui-grid ui-grid-responsive">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-1">
+                <p:outputLabel value="Fornecedor:" for="fornecedor:valor"/>
+            </div>
+            <div class="ui-grid-col-4">			
+                        <dlg:autoComplete id="fornecedor" controller="#{contaPagarController.fornecedores}" value="#{contaPagarController.selected.fornecedor}" 
+                          dialogId="dlgFornecedor" update=":form:fornecedor:valor" require="true" header="#{bundle.fornecedor}" onRowSelect="#{contaPagarController.onRowSelectFornecedor}"/>		
+            </div>
+        </div>
+    </div>
+    
+    <div class="ui-grid ui-grid-responsive">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-1">
+                <p:outputLabel value="#{bundle.filiais}:" for="filial:valor"/>
+            </div>
+            <div class="ui-grid-col-4">			
+                <dlg:autoComplete id="filial" controller="#{contaPagarController.filiais}" value="#{contaPagarController.selected.filial}" 
+                          dialogId="dlgFilial" update=":form:filial:valor"
+                          require="true" header="#{bundle.filial}" onRowSelect="#{contaPagarController.onRowSelectFilial}"/>            
+            </div>
+        </div>
+    </div>
+    
+    <div class="ui-grid ui-grid-responsive">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-1">
+                <h:outputLabel value="Nota Fornec:"/>                
+            </div>
+            <div class="ui-grid-col-4">			
+                <p:inputText id="notaFornecedor" value="#{contaPagarController.selected.notaFornecedor}" styleClass="form-control"/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="ui-grid ui-grid-responsive">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-1">
+                <h:outputLabel value="#{bundle.valor} R$:"/>                
+            </div>
+            <div class="ui-grid-col-4">			
+                <h:outputText value="#{contaPagarController.selected.valorTotal}" id="valorTotal" styleClass="form-control">
+                    <f:convertNumber pattern="#{bundle.pattern4DigitsWithThousandSeparator}"/>
+                </h:outputText>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    <p:dataTable id="itens" value="#{contaPagarController.selected.contaPagarItem}" var="parcela" reflow="true" selectionMode="single" selection="#{contaPagarController.itemSelecionado}"
+                 paginatorPosition="bottom" paginator="true" rowKey="#{parcela.sequencia}" rows="10" rowsPerPageTemplate="10,20,30,40,50"
+                 paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" emptyMessage="#{bundle.emptyMessage}"> 
+
+        <p:ajax event="rowSelect" update="@form"/>
+
+        <p:column styleClass="colInteiro">
+            <f:facet name="header">
+                <h:outputText value="Parcela"/>
+            </f:facet>
+            <h:outputText value="#{parcela.sequencia}"/>
+        </p:column>
+        <p:column styleClass="textCenter">
+            <f:facet name="header">
+                <h:outputText value="Data Vencimento"/>
+            </f:facet>
+            <h:outputText value="#{parcela.dataVencimento}">
+                <f:convertDateTime pattern="#{bundle.patternData}" />
+            </h:outputText>
+        </p:column>
+
+        <p:column styleClass="textRight">
+            <f:facet name="header">
+                <h:outputText value="Valor Inicial"/>
+            </f:facet>
+            <h:outputText value="#{parcela.valorInicial}">
+                <f:convertNumber pattern="#{bundle.pattern4DigitsWithThousandSeparator}"/>
+            </h:outputText>
+        </p:column>        
+        <p:column styleClass="colBoolean">
+            <f:facet name="header">
+                <h:outputText value="Pago?"/>
+            </f:facet>
+            <h:outputText styleClass="#{parcela.classSituacao}" value="#{parcela.stringPago}"/>
+        </p:column>                
+
+    </p:dataTable>    
+
+    <button jsf:id="save" name="save" type="submit"  class="btn btn-primary btn-sm">
+        <f:ajax execute="@form" render="@form" listener="#{contaPagarController.salvar}"/>
+        <span class="glyphicon glyphicon-save" aria-hidden="true"></span> #{bundle.Salvar}
+    </button>    
+
+    <button jsf:id="plus" name="plus" type="submit"  class="btn btn-success btn-sm" style="margin-left: 3px;">
+        <f:ajax execute="@form" render=":formItem" listener="#{contaPagarController.novoContaPagarItem}"/>
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> #{bundle.adParcela}
+    </button>
+
+    <button jsf:id="pagar" name="pagar" type="submit"  class="btn btn-info btn-sm" jsf:disabled="#{contaPagarController.disablePagar}" style="margin-left: 3px;">
+        <f:ajax execute="@form" render=":form" listener="#{contaPagarController.pagarParcela}"/>
+        <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Pagar
+    </button>
+
+    <button jsf:id="delete" name="clear" value="Clear" class="btn btn-danger btn-sm" jsf:disabled="#{contaPagarController.disableDelete}" style="margin-left: 3px;">
+        <f:ajax render="@all" listener="#{contaPagarController.deleteContaPagarItem}"/>
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> #{bundle.excluir}
+    </button>
+
+
+    <p:commandButton actionListener="#{contaPagarController.voltar}" styleClass="btn btn-link" value="#{bundle.voltar}" update="@form" process="@this" style="margin-left: 3px;"/>        
+</ui:composition>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:dataTable id="tabela" value="#{filialController}" var="item" lazy="true" selectionMode="single" selection="#{filialController.selected}"
+        paginatorPosition="bottom" paginator="true" rowKey="#{item.id}" rows="10" rowsPerPageTemplate="10,20,30,40,50"
+        paginatorTemplate="{PageLinks} {RowsPerPageDropdown}">            
+
+        <p:ajax event="rowSelect"   update="@form"/>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="#{bundle.descricao}"/>
+            </f:facet>
+            <h:outputText value="#{item.descricao}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="#{bundle.nomeFantasia}"/>
+            </f:facet>
+            <h:outputText value="#{item.nomeFantasia}"/>
+        </p:column>
+        <p:column styleClass="columnSingleButton">
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  actionListener="#{filialController.delete(item)}" update="tabela"/>
+        </p:column>
+    </p:dataTable>
+    <div class="btns">
+        <p:commandButton id="createButton" styleClass="btn btn-success"  value="#{bundle.novo}" actionListener="#{filialController.prepareCreate}" update="@form"/>            
+    </div>
+</ui:composition>
