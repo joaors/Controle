@@ -6,12 +6,12 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <p:focus for="descricao"/>
-    <p:panelGrid id="pnDados" columns="2" styleClass="rotulo, fieldsForm">
+    <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid">
         <h:outputLabel value="#{bundle.descricao}" for="descricao"/>
-        <p:inputText id="descricao" value="#{servicoController.selected.descricao}" required="true" size="50"/>
+        <p:inputText id="descricao" value="#{servicoController.selected.descricao}" styleClass="form-control" required="true" size="50"/>
               
         <h:outputLabel value="#{bundle.valor}" for="valor"/>
-        <p:inputText id="valor" value="#{servicoController.selected.valor}">
+        <p:inputText id="valor" value="#{servicoController.selected.valor}" styleClass="form-control">
             <f:convertNumber currencySymbol="R$" pattern="#{bundle.pattern4DigitsWithThousandSeparator}"/>
         </p:inputText>
         

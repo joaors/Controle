@@ -11,7 +11,7 @@
     <ui:define name="body">
         <h:form id="form">
             <div>
-                <p:panelGrid columns="2" columnClasses="ui-grid-col-1, ui-grid-col-4" layout="grid">
+                <p:panelGrid columns="2" columnClasses="ui-grid-col-1, ui-grid-col-6" layout="grid">
                     <p:outputLabel value="#{bundle.cliente}:"/>
                     <dlg:autoComplete id="completeCliente" controller="#{consultaOrdemServicoController.clientes}" value="#{consultaOrdemServicoController.cliente}" 
                         dialogId="dlgCliente" update=":form:completeCliente:valor" require="false"
@@ -35,7 +35,7 @@
                     </p:selectOneRadio>
                 </p:panelGrid>
                 <div class="btns">
-                    <p:commandButton action="#{consultaOrdemServicoController.consultar}" styleClass="bbtn btn_verde" value="Consultar" process="@form" update="@form"/>
+                    <p:commandButton action="#{consultaOrdemServicoController.consultar}" styleClass="btn btn_verde" value="Consultar" process="@form" update="@form"/>
                 </div>
             </div>
             <p:dataTable id="tabela" styleClass="tabela" value="#{consultaOrdemServicoController}" var="item" lazy="true" rowKey="#{item.id}" 

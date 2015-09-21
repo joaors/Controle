@@ -12,7 +12,7 @@
             <div class="ui-grid-col-1">
                 <p:outputLabel value="Fornecedor:" for="fornecedor:valor"/>
             </div>
-            <div class="ui-grid-col-4">			
+            <div class="ui-grid-col-6">			
                         <dlg:autoComplete id="fornecedor" controller="#{contaPagarController.fornecedores}" value="#{contaPagarController.selected.fornecedor}" 
                           dialogId="dlgFornecedor" update=":form:fornecedor:valor" require="true" header="#{bundle.fornecedor}" onRowSelect="#{contaPagarController.onRowSelectFornecedor}"/>		
             </div>
@@ -24,7 +24,7 @@
             <div class="ui-grid-col-1">
                 <p:outputLabel value="#{bundle.filiais}:" for="filial:valor"/>
             </div>
-            <div class="ui-grid-col-4">			
+            <div class="ui-grid-col-6">			
                 <dlg:autoComplete id="filial" controller="#{contaPagarController.filiais}" value="#{contaPagarController.selected.filial}" 
                           dialogId="dlgFilial" update=":form:filial:valor"
                           require="true" header="#{bundle.filial}" onRowSelect="#{contaPagarController.onRowSelectFilial}"/>            
@@ -37,7 +37,7 @@
             <div class="ui-grid-col-1">
                 <h:outputLabel value="Nota Fornec:"/>                
             </div>
-            <div class="ui-grid-col-4">			
+            <div class="ui-grid-col-6">			
                 <p:inputText id="notaFornecedor" value="#{contaPagarController.selected.notaFornecedor}" styleClass="form-control"/>
             </div>
         </div>
@@ -48,7 +48,7 @@
             <div class="ui-grid-col-1">
                 <h:outputLabel value="#{bundle.valor} R$:"/>                
             </div>
-            <div class="ui-grid-col-4">			
+            <div class="ui-grid-col-6">			
                 <h:outputText value="#{contaPagarController.selected.valorTotal}" id="valorTotal" styleClass="form-control">
                     <f:convertNumber pattern="#{bundle.pattern4DigitsWithThousandSeparator}"/>
                 </h:outputText>

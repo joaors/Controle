@@ -55,6 +55,13 @@
     font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif; 
 }
 
+/* --------------Bootstrap Overload */
+.navbar {
+    margin-bottom: 0px !important;
+}
+
+
+
 
 /* --------- CUSTOM --------- */
 

@@ -8,7 +8,7 @@
     <p:tabView id="tabView" widgetVar="tabView">
         <p:tab title="Dados Pessoais">
             <p:focus for="descricao"/>            
-            <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-1, ui-grid-col-4" layout="grid">
+            <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid">
                 
                 <p:outputLabel value="#{bundle.descricao}:" for="descricao"/>
                 <p:inputText id="descricao" type="text" class="form-control" value="#{clienteController.selected.descricao}" required="true" requiredMessage="Valor Obrigatório" styleClass="form-control"/>
@@ -32,7 +32,7 @@
         </p:tab>
         <p:tab title="Endereço">
             <p:focus for="endereco"/>
-            <p:panelGrid id="pnEndereco" columns="2">
+            <p:panelGrid id="pnEndereco" columns="2" columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid">
                 <h:outputLabel value="#{bundle.rua}:"/>
                 <p:inputText id="endereco" type="text" class="form-control" value="#{clienteController.selected.endereco}" size="50"/>
 
