@@ -6,14 +6,12 @@
 
 package com.controle.converter;
 
-import com.google.common.base.Strings;
 import com.controle.entity.BaseEntity;
-import com.controle.jsf.util.JsfUtil;
 import java.util.Map;
+import java.util.Objects;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
 /**
@@ -25,8 +23,8 @@ public class SimpleEntityConverter implements Converter {
   
     @Override
     public Object getAsObject(FacesContext ctx, UIComponent component, String value) {  
-        if (value != null) {  
-            return this.getAttributesFrom(component).get(value);  
+        if (!Objects.isNull(value)) {  
+            return getAttributesFrom(component).get(value);  
         }  
         return null;  
     }  
@@ -34,25 +32,19 @@ public class SimpleEntityConverter implements Converter {
     @Override
     public String getAsString(FacesContext ctx, UIComponent component, Object value) {  
   
-        if (value != null  
-                && !"".equals(value)) {  
-  
-            BaseEntity entity = (BaseEntity) value;  
-  
-            // adiciona item como atributo do componente  
-            this.addAttribute(component, entity);  
-  
+        if (value != null && !"".equals(value)) {    
+            BaseEntity entity = (BaseEntity) value;
+            addAttribute(component, entity);
             Integer codigo = entity.getId();  
             if (codigo != null) {  
                 return String.valueOf(codigo);  
             }  
-        }  
-  
+        } 
         return (String) value;  
     }  
   
     protected void addAttribute(UIComponent component, BaseEntity o) {  
-        String key = o.getId().toString(); // codigo da empresa como chave neste caso  
+        String key = o.getId().toString();
         this.getAttributesFrom(component).put(key, o);  
     }  
   

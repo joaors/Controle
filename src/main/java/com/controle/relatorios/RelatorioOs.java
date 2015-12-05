@@ -6,16 +6,13 @@
 package com.controle.relatorios;
 
 import com.controle.dto.EmissaoOrdemServico;
-import com.controle.dto.Person;
 import com.controle.jsf.util.JsfUtil;
 import java.io.File;
 import java.io.FileInputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -25,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.primefaces.context.RequestContext;
 
 /**
  *

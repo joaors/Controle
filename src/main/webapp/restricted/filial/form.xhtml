@@ -2,10 +2,11 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:comp="http://xmlns.jcp.org/jsf/composite/component"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <p:focus for="descricao"/>
-    <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-1, ui-grid-col-4" layout="grid">
+    <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid">
         <h:outputLabel value="#{bundle.descricao}:"/>
         <p:inputText id="descricao" value="#{filialController.selected.descricao}" type="text" required="true" styleClass="form-control"/>
         
@@ -26,8 +27,5 @@
         <p:inputText id="osfim" value="#{filialController.selected.osfim}" styleClass="form-control"/>
         
     </p:panelGrid>
-    <div class="btns">
-        <p:commandButton actionListener="#{filialController.salvar}" styleClass="btn btn-primary" value="#{bundle.Salvar}" process="pnDados @this" update="@form"/>
-        <p:commandButton actionListener="#{filialController.voltar}" styleClass="btn btn-link" value="#{bundle.voltar}" update="@form" process="@this"/>        
-    </div>
+    <comp:botoesForm id="acoes" form="#{filialController}"></comp:botoesForm>    
 </ui:composition>

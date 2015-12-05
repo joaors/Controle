@@ -12,7 +12,7 @@
     
     <ui:define name="body">
         <h:form id="form">
-            <p:defaultCommand target="form:salvar"/>
+            <p:defaultCommand target="form:acoes:salvar"/>
             <h:panelGroup rendered="#{empty clienteController.selected}"><ui:include src="list.xhtml"/></h:panelGroup>
             <h:panelGroup rendered="#{!empty clienteController.selected}"><ui:include src="form.xhtml"/></h:panelGroup>
         </h:form>

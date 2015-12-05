@@ -2,13 +2,13 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:comp="http://xmlns.jcp.org/jsf/composite/component"      
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <p:tabView id="tabView" widgetVar="tabView">
         <p:tab title="Dados Pessoais">
             <p:focus for="descricao"/>            
-            <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-1, ui-grid-col-4" layout="grid">
+            <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid">
                 
                 <p:outputLabel value="#{bundle.descricao}:" for="descricao"/>
                 <p:inputText id="descricao" type="text" class="form-control" value="#{clienteController.selected.descricao}" required="true" requiredMessage="Valor Obrigatório" styleClass="form-control"/>
@@ -32,7 +32,7 @@
         </p:tab>
         <p:tab title="Endereço">
             <p:focus for="endereco"/>
-            <p:panelGrid id="pnEndereco" columns="2">
+            <p:panelGrid id="pnEndereco" columns="2" columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid">
                 <h:outputLabel value="#{bundle.rua}:"/>
                 <p:inputText id="endereco" type="text" class="form-control" value="#{clienteController.selected.endereco}" size="50"/>
 
@@ -72,11 +72,6 @@
             </p:dataTable>
                  
         </p:tab>        
-    </p:tabView>
-
-    <div class="btns">
-        <p:commandButton actionListener="#{clienteController.salvar}" id="salvar" styleClass="btn-primary" value="#{bundle.Salvar}" process="@form" update="@form"/>
-        <p:commandButton actionListener="#{clienteController.voltar}" class="btn btn-link" value="#{bundle.voltar}" update="@form" process="@this"/>        
-    </div>
-    
+    </p:tabView>    
+    <comp:botoesForm id="acoes" form="#{clienteController}"></comp:botoesForm>
 </ui:composition>
