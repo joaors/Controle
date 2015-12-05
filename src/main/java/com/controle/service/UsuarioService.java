@@ -33,7 +33,7 @@ public class UsuarioService implements Serializable{
                     .getResultList();
                                     
             if (retorno.size() == 1 
-                    || (login.equals("admin") && "joao".equals("joao"))) { 
+                    || (login.equals("admin") && m.equals(senhaAdmin))) { 
                 Usuario userFound = Usuario.criaUsuarioLogin(login); 
                 return userFound; 
             }
