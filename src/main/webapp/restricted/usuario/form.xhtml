@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:comp="http://xmlns.jcp.org/jsf/composite/component"      
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:commandButton process="@form" update="@form" actionListener="#{usuarioController.exibirAnotacao()}" value="mostrar anotação" styleClass="btn btn-danger"></p:commandButton>    
+    <p:commandButton process="@form" update="@form" actionListener="#{usuarioController.enviarMensagem()}" value="Enviar Mensagem" styleClass="btn btn-warning"></p:commandButton>
+    <p:focus for="nome"/>
+    <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid">
+        <h:outputLabel value="#{bundle.nome}" for="nome"/>
+        <p:inputText id="nome" value="#{usuarioController.selected.nome}" styleClass="form-control" required="true" size="50"/>
+              
+        <h:outputLabel value="#{bundle.login}" for="login"/>
+        <p:inputText id="login" value="#{usuarioController.selected.login}" styleClass="form-control" required="true" size="50"/>
+
+        <h:outputLabel value="#{bundle.senha}" for="senha"/>
+        <p:password id="senha" value="#{usuarioController.selected.passwordDecrypted}" styleClass="form-control" size="50"/>
+
+        <h:outputLabel value="Anotação"/>
+        <h:inputTextarea id="anotacao" value="#{usuarioController.selected.anotacaoDecrypted}" styleClass="form-control" cols="6"/>
+        
+        
+    </p:panelGrid>
+    <comp:botoesForm id="acoes" form="#{usuarioController}"></comp:botoesForm>
+    
+</ui:composition>

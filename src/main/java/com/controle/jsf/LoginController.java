@@ -5,6 +5,7 @@
  */
 package com.controle.jsf;
 
+import com.controle.entity.ContaPagarItem;
 import com.controle.entity.Usuario;
 import com.controle.service.UsuarioService;
 import com.controle.jsf.util.JsfUtil;
@@ -53,6 +54,8 @@ public class LoginController implements Serializable{
             return "/login/login.jsf?faces-redirect=true";
         }
      }
+    
+  
      
     public String doLogout() {
         usuarioLogado = null;

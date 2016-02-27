@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException { 
         //Captura o ManagedBean chamado “usuarioMB” 
-        LoginController usuarioMB = (LoginController) ((HttpServletRequest) request) .getSession().getAttribute("loginController"); 
+        LoginController usuarioMB = (LoginController) ((HttpServletRequest) request).getSession().getAttribute("loginController"); 
         Usuario usuario = (Usuario) ((HttpServletRequest) request) .getSession().getAttribute("usuario");
         //Verifica se nosso ManagedBean ainda não 
         //foi instanciado ou caso a 

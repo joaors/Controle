@@ -81,6 +81,11 @@ public class JsfUtil {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
     }
+    
+    public static void addErrorMessageNoI18N(String message) {        
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message);
+        FacesContext.getCurrentInstance().addMessage(null, facesMsg);        
+    }
 
     public static void addSuccessMessage(String i18n) {
         String mensagem = getMessageI18n(i18n);
