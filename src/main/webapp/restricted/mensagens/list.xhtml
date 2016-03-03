@@ -13,16 +13,23 @@
             <div>
                 <p:panelGrid columns="2" columnClasses="ui-grid-col-1, ui-grid-col-6" layout="grid">
                     <p:outputLabel for="usuario" value="Usuario:"/>
-                    <p:inputText id="usuario" value="#{mensagemController.usuario}"/>
-                </p:panelGrid>
+                    <p:inputText id="usuario" value="#{mensagemController.usuario}" required="true"/>
+                </p:panelGrid>               
             </div>
+            <br/>
+            <br/>
+			<p:commandButton process="@form" update="@form" 
+								actionListener="#{mensagemController.buscarMensagensUsuario()}" value="Listar mensagens" styleClass="btn btn-primary"></p:commandButton>            
             <p:dataTable id="tabela" styleClass="tabela" value="#{mensagemController.mensagens}" var="item" lazy="false" rowKey="#{item.id}" 
-                         paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" paginatorPosition="bottom" reflow="true">
+                         paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" paginatorPosition="bottom" reflow="true" emptyMessage="Nenhum registro encontrado">
+                    <f:facet name="header">
+                        <h:outputText value="Mensagem"/>
+                    </f:facet>
                 <p:column styleClass="colValor">
                     <f:facet name="header">
-                        <h:outputText value="O.S"/>
+                        <h:outputText value="Mensagem"/>
                     </f:facet>
-                    <h:outputText value="#{item.destinatario}"/>
+                    <h:outputText value="#{item.mensagemDecrypted}"/>
                 </p:column>
             </p:dataTable>
         </h:form>
