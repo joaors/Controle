@@ -1,0 +1,31 @@
+<ui:composition template="/template.xhtml"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:dlg="http://xmlns.jcp.org/jsf/composite/component"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title"><h:outputText value="Consulta Mensagens"></h:outputText></ui:define>  
+    <ui:define name="caminho"><h:outputText value="Mensagem - Consulta"></h:outputText></ui:define>
+    <ui:define name="body">
+        <h:form id="form">
+            <div>
+                <p:panelGrid columns="2" columnClasses="ui-grid-col-1, ui-grid-col-6" layout="grid">
+                    <p:outputLabel for="usuario" value="Usuario:"/>
+                    <p:inputText id="usuario" value="#{mensagemController.usuario}"/>
+                </p:panelGrid>
+            </div>
+            <p:dataTable id="tabela" styleClass="tabela" value="#{mensagemController.mensagens}" var="item" lazy="false" rowKey="#{item.id}" 
+                         paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" paginatorPosition="bottom" reflow="true">
+                <p:column styleClass="colValor">
+                    <f:facet name="header">
+                        <h:outputText value="O.S"/>
+                    </f:facet>
+                    <h:outputText value="#{item.destinatario}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:outputScript name="js/Locale.js"/>        
+    </ui:define>
+</ui:composition>

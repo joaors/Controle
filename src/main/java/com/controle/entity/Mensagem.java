@@ -30,6 +30,7 @@ public class Mensagem implements BaseEntity {
 
     @JoinColumn(name="IDDESTINATARIO")
     @ManyToOne(fetch = FetchType.LAZY)
+    private Usuario destinatario;
     
     @Column
     @Lob
@@ -55,8 +56,6 @@ public class Mensagem implements BaseEntity {
     public void setMensagem(byte[] mensagem) {
         this.mensagem = mensagem;
     }
-    
-    private Usuario destinatario;    
 
     public Usuario getDestinatario() {
         return destinatario;
