@@ -19,7 +19,19 @@
             <h:panelGroup rendered="#{!empty usuarioController.selected}"><ui:include src="form.xhtml"/></h:panelGroup>
         </h:form>
         
-        
+        <p:dialog id="dlgEnviarMensagem" widgetVar="dlgEnviarMensagem" header="Enviar Mensagem">
+            <h:form id="formMensagem">
+                    
+                <p:outputLabel value="Mensagem:"/>
+                <p:inputTextarea id="mensagem" styleClass="form-control" cols="4" value="#{usuarioController.mensagem}" placeholder="Digite a mensagem aqui"></p:inputTextarea>
+                    
+                <div class="btns">
+                    <h:commandButton actionListener="#{usuarioController.enviarMensagem}" value="#{bundle.Salvar}" styleClass="btn btn-primary">
+                        <p:ajax  process="@(form)"/>
+                    </h:commandButton>
+                </div>
+            </h:form>
+        </p:dialog>        
         
     </ui:define>
 </ui:composition>

@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <p:commandButton process="@form" update="@form" actionListener="#{usuarioController.exibirAnotacao()}" value="mostrar anotação" styleClass="btn btn-danger"></p:commandButton>    
-    <p:commandButton process="@form" update="@form" actionListener="#{usuarioController.enviarMensagem()}" value="Enviar Mensagem" styleClass="btn btn-warning"></p:commandButton>
+    <p:commandButton process="@form" update="@form" actionListener="#{usuarioController.showDialogMensagem()}" value="Enviar Mensagem" styleClass="btn btn-warning"></p:commandButton>
     <p:focus for="nome"/>
     <p:panelGrid id="pnDados" columns="2" columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid">
         <h:outputLabel value="#{bundle.nome}" for="nome"/>

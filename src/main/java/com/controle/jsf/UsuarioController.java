@@ -6,6 +6,7 @@
 package com.controle.jsf;
 
 import com.controle.entity.ContaPagarItem;
+import com.controle.entity.Mensagem;
 import com.controle.entity.Usuario;
 import com.controle.facade.AbstractFacade;
 import com.controle.facade.ServicoFacade;
@@ -24,6 +25,8 @@ import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -40,6 +43,17 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     @Inject
     private UsuarioService service;
     
+    private String mensagem;
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
+    
+    
     public void exibirAnotacao() throws Exception {
         if (!Strings.isNullOrEmpty(getSelected().getPasswordDecrypted())) {
             byte[] senha = service.convertStringToMd5Char(getSelected().getPasswordDecrypted());
@@ -49,9 +63,21 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         }
     }
     
-    public void enviarMensagem() {
-        RequestContext.getCurrentInstance().execute("alert('ola');");
+    public void showDialogMensagem() {
+        this.mensagem = "";
+        JsfUtil.openDialog("dlgEnviarMensagem");
     }
+    
+    public void enviarMensagem() {
+        try {
+            service.enviarMensagem(mensagem, getSelected());
+            JsfUtil.closeDialog("dlgEnviarMensagem");
+            JsfUtil.addSuccessMessageNoI18N("Mensagem enviada com sucesso");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
+            e.printStackTrace();
+        }
+    }    
     
     @Override
     public void salvar() {

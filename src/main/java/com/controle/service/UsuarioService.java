@@ -5,7 +5,9 @@
  */
 package com.controle.service;
 
+import com.controle.entity.Mensagem;
 import com.controle.entity.Usuario;
+import com.controle.util.Seguranca;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -79,6 +81,14 @@ public class UsuarioService implements Serializable{
             e.printStackTrace(); 
             return null; 
         }
-    }    
+    }
+    
+    public void enviarMensagem(String body, Usuario usuario) throws Exception {
+            byte[] msg = Seguranca.encryptPublic(usuario.getPublicKey(), body.getBytes("UTF-8"));
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem(msg);
+            mensagem.setDestinatario(usuario);
+            em.persist(mensagem);
+    }
     
 }

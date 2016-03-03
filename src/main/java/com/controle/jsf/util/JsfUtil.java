@@ -93,6 +93,11 @@ public class JsfUtil {
         FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
     }
     
+    public static void addSuccessMessageNoI18N(String message) {        
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, message, message);
+        FacesContext.getCurrentInstance().addMessage(null, facesMsg);        
+    }    
+    
     public static String getMessageI18n(String key) {
 	ResourceBundle bundle = ResourceBundle.getBundle("/Bundle");
 	return bundle.getString(key);
