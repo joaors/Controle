@@ -15,6 +15,7 @@ import com.controle.util.Filtro;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,7 +28,7 @@ public class EmpresaServicoController extends AbstractController<EmpresaServico>
     @PersistenceContext(type=PersistenceContextType.TRANSACTION)
     protected EntityManager em;	    
     
-    @EJB
+    @Inject
     private EmpresaServicoFacade ejbFacade;
 
     public EmpresaServicoController() {

@@ -13,6 +13,7 @@ import com.controle.entity.Cliente;
 import com.controle.entity.EmpresaServico;
 import com.controle.entity.Filial;
 import com.controle.entity.OrdemServico;
+import com.controle.entity.Usuario;
 import com.controle.facade.OrdemServicoFacade;
 import com.controle.jsf.util.JsfUtil;
 import com.controle.produces.EntityList;
@@ -24,9 +25,12 @@ import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.inject.Default;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -38,7 +42,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class IncluirOsController extends AbstractController<OrdemServico> {
     
-    @EJB
+    @Inject
     private OrdemServicoFacade ejbFacade;
     
     @Inject @ClienteEntityList
@@ -49,6 +53,8 @@ public class IncluirOsController extends AbstractController<OrdemServico> {
     
     @Inject @FilialEntityList
     private EntityList filiais;
+    
+    private String senha;
     
     private OrdemServico os = new OrdemServico();
     
@@ -70,6 +76,15 @@ public class IncluirOsController extends AbstractController<OrdemServico> {
     public EntityList getEmpresaServicos() {
         return empresaServicos;
     }    
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }    
+    
     
     public void onRowSelectCliente(SelectEvent event) {
         JsfUtil.cleanSubmittedValues("form:cliente:valor");
@@ -104,10 +119,13 @@ public class IncluirOsController extends AbstractController<OrdemServico> {
     @Override
     public void salvar() {
         try {
+                HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+                HttpSession session = request.getSession(true);  
+                Usuario user = (Usuario) session.getAttribute("usuario");            
             if (ejbFacade.OpExists(os.getNumero())) {
                 throw new Exception("ordemServicoJaCadastrada");
             }
-            ejbFacade.persist(os);
+            ejbFacade.salvarOrdemServico(os, senha, user);
             os = new OrdemServico();            
             JsfUtil.addSuccessMessage("registroSalvo");
         } catch (Exception ex) {            

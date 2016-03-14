@@ -15,6 +15,9 @@
         <h:outputLabel value="#{bundle.login}" for="login"/>
         <p:inputText id="login" value="#{usuarioController.selected.login}" styleClass="form-control" required="true" size="50"/>
 
+        <h:outputLabel value="caminho certificado" for="certificado"/>
+        <p:inputText id="certificado" value="#{usuarioController.selected.pathPublicKey}" styleClass="form-control" required="true" size="50"/>        
+        
         <h:outputLabel value="#{bundle.senha}" for="senha"/>
         <p:password id="senha" value="#{usuarioController.selected.passwordDecrypted}" styleClass="form-control" size="50"/>
 

@@ -109,10 +109,13 @@
                         <h:outputText value="Pago?"/>
                     </f:facet>
                     <h:outputText styleClass="#{item.classSituacao}" value="#{item.stringPago}"/>
-                </p:column>            
+                </p:column>
+                <p:column styleClass="columnSingleButton">
+                    <p:commandButton id="verificarAssinatura" icon="ui-icon-trash" actionListener="#{consultaOrdemServicoController.verificarAssinatura(item)}" update="tabela"/>
+                </p:column>                
                 <p:column styleClass="columnSingleButton">
                     <p:commandButton id="deleteButton" icon="ui-icon-trash" actionListener="#{consultaOrdemServicoController.delete(item)}" update="tabela" rendered="#{consultaOrdemServicoController.getRenderExcluirOp(item) and loginController.isAdmin}"/>
-                </p:column>
+                </p:column>                
             </p:dataTable>
         </h:form>
         <h:form id="formCliente">

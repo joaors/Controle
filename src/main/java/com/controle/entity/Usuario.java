@@ -38,7 +38,8 @@ public class Usuario implements BaseEntity{
     @Column(unique = true) 
     private String login; 
     
-    @Column private String senha;
+    @Column 
+    private String senha;
     
     @Column
     private String anotacao;
@@ -55,12 +56,25 @@ public class Usuario implements BaseEntity{
     @Lob
     private byte[] privateKey;
     
+    @Column
+    private String pathPublicKey;
+    
     
     @Transient
     private String passwordDecrypted;
     
     @Transient
     private String anotacaoDecrypted;    
+
+    public String getPathPublicKey() {
+        return pathPublicKey;
+    }
+
+    public void setPathPublicKey(String pathPublicKey) {
+        this.pathPublicKey = pathPublicKey;
+    }
+    
+    
 
     public String getAnotacaoDecrypted() {
         return anotacaoDecrypted;

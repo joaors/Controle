@@ -10,6 +10,7 @@ import com.controle.facade.AbstractFacade;
 import com.controle.facade.FornecedorFacade;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -20,7 +21,7 @@ import javax.inject.Named;
 @ViewScoped
 public class FornecedorController extends AbstractController<Fornecedor>{
 
-    @EJB
+    @Inject
     private FornecedorFacade facade;
     
     @Override

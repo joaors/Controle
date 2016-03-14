@@ -7,13 +7,17 @@ package com.controle.service;
 
 import com.controle.entity.Mensagem;
 import com.controle.entity.Usuario;
+import com.controle.util.ExportarPublica;
 import com.controle.util.Seguranca;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -40,7 +44,7 @@ public class UsuarioService implements Serializable{
                     .getSingleResult();
             
             if (Arrays.equals(retorno.getPassword(),m)) {
-                return Usuario.criaUsuarioLogin(login);
+                return retorno;
             }
             return null;            
         } catch (Exception e) { 
@@ -84,9 +88,17 @@ public class UsuarioService implements Serializable{
     }
     
     public void enviarMensagem(String body, Usuario usuario) throws Exception {
-            byte[] msg = Seguranca.encryptPublic(usuario.getPublicKey(), body.getBytes("UTF-8"));
+            UUID uuid = UUID.randomUUID();
+            String random = uuid.toString();
+            
+            PublicKey publicKey = ExportarPublica.getPublicKey(usuario.getPathPublicKey());
+            byte[] secretKeyCifrada = ExportarPublica.cifrarMsgComChavePublica(random.getBytes(), publicKey);
+            
             Mensagem mensagem = new Mensagem();
-            mensagem.setMensagem(msg);
+            mensagem.setChaveSecreta(secretKeyCifrada);
+            String textoCifrado = Seguranca.Encrypt(body, random.getBytes());
+            
+            mensagem.setMensagem(textoCifrado.getBytes());
             mensagem.setDestinatario(usuario);
             em.persist(mensagem);
     }

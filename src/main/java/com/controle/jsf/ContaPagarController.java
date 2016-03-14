@@ -31,7 +31,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ContaPagarController extends AbstractController<ContaPagar>{
 
-    @EJB
+    @Inject
     private ContaPagarFacade facade;
     
     @Inject @FilialEntityList

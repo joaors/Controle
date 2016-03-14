@@ -12,6 +12,7 @@ import com.controle.entity.Filial;
 import com.controle.entity.OrdemServico;
 import com.controle.facade.AbstractFacade;
 import com.controle.facade.OrdemServicoFacade;
+import com.controle.jsf.util.JsfUtil;
 import com.controle.produces.EntityList;
 import com.controle.produces.ListProduces;
 import com.controle.util.Filtro;
@@ -19,6 +20,8 @@ import com.controle.util.Opcoes;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -73,6 +76,15 @@ public class ConsultaOrdemServicoController extends AbstractController<OrdemServ
     public void onRowSelectFilial(SelectEvent event) {
         filial = (Filial) event.getObject();
         RequestContext.getCurrentInstance().execute("PF('dlgFilial').hide()");
+    }
+    
+    public void verificarAssinatura(OrdemServico os) {
+        try {
+            String nome = facade.verificarAssinatura(os);
+            RequestContext.getCurrentInstance().execute("alert("+nome+")");
+        } catch (Exception ex) {
+            JsfUtil.addErrorMessageNoI18N(ex.getMessage());
+        }
     }
     
     public Opcoes[] getListOpcoes() {

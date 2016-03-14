@@ -63,6 +63,10 @@
                     <f:convertNumber pattern="#,##0.00" />
                     <p:ajax event="blur" update=":form:valorTotal"/>
                 </p:inputText>
+                
+                <h:outputLabel value="Senha:"/>
+                <p:password id="senha" value="#{incluirOsController.senha}" styleClass="form-control">
+                </p:password>                
             </p:panelGrid>
             <div class="btns">
                 <p:commandButton id="salvar" action="#{incluirOsController.salvar}" styleClass="btn btn-primary" value="#{bundle.Salvar}" process="@form" update="@form"/>

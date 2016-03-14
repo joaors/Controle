@@ -24,18 +24,28 @@ public class MensagemController extends AbstractController<Mensagem>{
     
     private String usuario;
     
+    private String senha;
+    
     private List<Mensagem> mensagens = Lists.newArrayList();
     
     @Inject
     MensagemFacade facade;
     
     public void buscarMensagensUsuario() throws Exception {
-        this.mensagens = facade.buscarMensagemUsuario(this.usuario);
+        this.mensagens = facade.buscarMensagemUsuario(this.usuario, this.senha);
     }
 
     @Override
     protected AbstractFacade getFacade() {
         return facade;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
     
     public String getUsuario() {

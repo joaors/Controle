@@ -7,7 +7,9 @@ package com.controle.facade;
 
 import com.controle.entity.Mensagem;
 import com.controle.entity.Usuario;
+import com.controle.util.ExportarPrivada;
 import com.controle.util.Seguranca;
+import java.security.KeyPair;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,13 +30,18 @@ public class MensagemFacade extends AbstractFacade<Mensagem>{
         return em;
     }
 
-    public List<Mensagem> buscarMensagemUsuario(String usuario) throws Exception {
+    public List<Mensagem> buscarMensagemUsuario(String usuario, String senha) throws Exception {
         List<Mensagem> mensagens = em.createQuery(
                                         "SELECT m FROM Mensagem m where m.destinatario.login = :login", Mensagem.class)
                                         .setParameter("login", usuario).getResultList();
+        
         for(Mensagem mensagem: mensagens) {
-            byte[] msg = Seguranca.decryptPrivate(mensagem.getDestinatario().getPrivateKey(), mensagem.getMensagem());
-            mensagem.setMensagemDecrypted(new String(msg));
+            KeyPair chavePrivada = ExportarPrivada.getPrivateKey(usuario, senha.toCharArray());
+            byte[] chaveSecreta = Seguranca.decryptPrivate(
+                    chavePrivada.getPrivate(), mensagem.getChaveSecreta()
+            );
+            String msg = Seguranca.Decrypt(chaveSecreta, mensagem.getMensagem());
+            mensagem.setMensagemDecrypted(msg);
         }
         return mensagens;
     }

@@ -37,7 +37,7 @@ import org.primefaces.context.RequestContext;
 @ViewScoped
 public class UsuarioController extends AbstractController<Usuario> implements Serializable{
     
-    @EJB
+    @Inject
     private UsuarioFacade servicoFacade;
     
     @Inject
@@ -55,12 +55,14 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
     
     
     public void exibirAnotacao() throws Exception {
+        /*
         if (!Strings.isNullOrEmpty(getSelected().getPasswordDecrypted())) {
             byte[] senha = service.convertStringToMd5Char(getSelected().getPasswordDecrypted());
             getSelected().setAnotacaoDecrypted(Seguranca.Decrypt(senha, getSelected().getAnotacao().getBytes()));
         } else {
             JsfUtil.addErrorMessage("informarSenhaAnotacao");
         }
+        */
     }
     
     public void showDialogMensagem() {

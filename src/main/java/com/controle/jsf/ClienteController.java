@@ -19,10 +19,10 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ClienteController extends AbstractController<Cliente> {
 
-    @EJB
+    @Inject
     private ClienteFacade ejbFacade;
     
-    @EJB
+    @Inject
     private EmpresaServicoFacade empresaServicoFacade;
     
     @Inject

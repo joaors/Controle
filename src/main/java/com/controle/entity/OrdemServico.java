@@ -9,12 +9,14 @@ package com.controle.entity;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +35,7 @@ public class OrdemServico implements BaseEntity {
     private Integer id;
 
     @JoinColumn(name="IDEMPRESA")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Cliente cliente;
     
     private Integer numero;
@@ -45,12 +47,33 @@ public class OrdemServico implements BaseEntity {
     private Date fim;
     
     @JoinColumn(name="IDEMPRESASERVICO")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmpresaServico empresaServico;
     
+    @JoinColumn(name="IDUSUARIOASSINATURA")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Usuario usuarioAssinatura;    
+    
     @JoinColumn(name="IDFILIAL")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Filial filial;
+    
+    @Column
+    @Lob
+    private byte[] assinatura;    
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.cliente.getId());
+        sb.append(this.numero);
+        sb.append(this.inicio.toString());
+        sb.append(this.fim.toString());
+        sb.append(this.empresaServico.getId());
+        sb.append(this.usuarioAssinatura.getId());
+        sb.append(this.filial.getId());                
+        return sb.toString();
+    }    
     
     private Integer quantidade;
     
@@ -202,6 +225,16 @@ public class OrdemServico implements BaseEntity {
         return hash;
     }
 
+    public byte[] getAssinatura() {
+        return assinatura;
+    }
+
+    public void setAssinatura(byte[] assinatura) {
+        this.assinatura = assinatura;
+    }
+    
+    
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -215,9 +248,16 @@ public class OrdemServico implements BaseEntity {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.controle.entity.OrdemServico[ id=" + id + " ]";
+
+
+    public Usuario getUsuarioAssinatura() {
+        return usuarioAssinatura;
     }
+
+    public void setUsuarioAssinatura(Usuario usuarioAssinatura) {
+        this.usuarioAssinatura = usuarioAssinatura;
+    }
+    
+    
     
 }

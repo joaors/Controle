@@ -36,6 +36,10 @@ public class Mensagem implements BaseEntity {
     @Lob
     private byte[] mensagem;
     
+    @Column
+    @Lob
+    private byte[] chaveSecreta;    
+    
     @Transient
     private String mensagemDecrypted;
     
@@ -64,6 +68,16 @@ public class Mensagem implements BaseEntity {
     public void setDestinatario(Usuario destinatario) {
         this.destinatario = destinatario;
     }
+
+    public byte[] getChaveSecreta() {
+        return chaveSecreta;
+    }
+
+    public void setChaveSecreta(byte[] chaveSecreta) {
+        this.chaveSecreta = chaveSecreta;
+    }
+    
+    
     
     @Override
     public void setId(Integer id) {

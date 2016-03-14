@@ -6,12 +6,13 @@ import com.controle.facade.ProdutoFacade;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named
 @ViewScoped
 public class ProdutoController extends AbstractController<Produto> {
 
-    @EJB
+    @Inject
     private ProdutoFacade ejbFacade;
 
     @Override

@@ -37,11 +37,11 @@ public class EmpresaServico implements BaseEntity {
     private Integer id;
     
     @JoinColumn(name="IDEMPRESA")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Empresa empresa;
     
     @JoinColumn(name="IDSERVICO")
-    @ManyToOne(fetch = FetchType.LAZY)    
+    @ManyToOne(fetch = FetchType.EAGER)    
     private Servico servico;
     
     private BigDecimal valorUnitario;
