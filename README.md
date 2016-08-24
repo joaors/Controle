@@ -1,5 +1,7 @@
 # Controle
 Projeto para Cobrança de Ordens de Serviço
 
-Projeto em para cobrança de Ordens de Serviço utilizando JSF, EJB, JPA, CDI, QueryDSL.
+Tecnologias utilizadas: JSF, EJB, JPA, CDI, QueryDSL
+Servidor de Aplicação: WildFly
+Banco de Dados: PostgreSQL
 
